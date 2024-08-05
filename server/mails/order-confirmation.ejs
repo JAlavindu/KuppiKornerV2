@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Order Confirmation</title>
+  </head>
+  <body>
+    <h1>Order Confirmation</h1>
+    <p>Hi <%= user.username %>,</p>
+    <p>Your order has been confirmed <%= order.name%></p>
+    <p>Order ID: <%= order._id %></p>
+    <p>Order Date: <%= order.createdAt %></p>
+    <p>Order Total: <%= order.price %></p>
+    <p>Thanks</p>
+  </body>
+</html>
