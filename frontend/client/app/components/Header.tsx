@@ -9,8 +9,8 @@ import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
-import Image from "next/image";
-import avatar from "../../public/assets/avatar.png";
+// import Image from "next/image";
+// import avatar from "../../public/assets/avatar.png";
 
 type Props = {
   open: boolean;
@@ -72,7 +72,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   onClick={() => setOpenSidebar(true)}
                 />
               </div>
-              {user ? (
+              {/* {user ? (
                 <Link href={"/profile"}>
                   <Image
                     alt=""
@@ -80,13 +80,13 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                     src={user.avatar ? user.avatar : avatar}
                   />
                 </Link>
-              ) : (
-                <HiOutlineUserCircle
-                  size={25}
-                  className="hidden 800px:block cursor-pointer dark:text-white text-black"
-                  onClick={() => setOpen(true)}
-                />
-              )}
+              ) : ( */}
+              <HiOutlineUserCircle
+                size={25}
+                className="hidden 800px:block cursor-pointer dark:text-white text-black"
+                onClick={() => setOpen(true)}
+              />
+              {/* )} */}
             </div>
           </div>
         </div>
