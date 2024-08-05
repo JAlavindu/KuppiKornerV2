@@ -8,7 +8,7 @@ import CustomModel from "../utils/CustomModel";
 import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 type Props = {
   open: boolean;
@@ -21,7 +21,7 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  // const user = useSelector((state: any) => state.auth);
+  const user = useSelector((state: any) => state.auth);
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -32,7 +32,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
       }
     });
   }
-  // console.log(user);
 
   const handleClose = (e: any) => {
     if (e.target.id === "screen") {
