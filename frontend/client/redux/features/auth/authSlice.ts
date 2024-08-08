@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import exp from "constants";
 
-const initialState = {
+interface AuthState {
+  token: string;
+  user: any;
+}
+
+const initialState: AuthState = {
   token: "",
-  user: "",
+  user: null,
 };
 
 const authSlice = createSlice({
@@ -15,14 +19,14 @@ const authSlice = createSlice({
     },
     userLoggedIn: (
       state,
-      action: PayloadAction<{ accessToken: string; user: string }>
+      action: PayloadAction<{ accessToken: string; user: any }>
     ) => {
       state.token = action.payload.accessToken;
-      state.token = action.payload.user;
+      state.user = action.payload.user; // Correctly setting the user here
     },
     userLoggedOut: (state) => {
       state.token = "";
-      state.token = "";
+      state.user = null; // Resetting the user correctly here
     },
   },
 });

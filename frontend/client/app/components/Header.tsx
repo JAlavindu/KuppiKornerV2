@@ -63,6 +63,8 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
     }
   };
 
+  // console.log("User from Redux:", user);
+
   return (
     <div className="w-full relative">
       <div
