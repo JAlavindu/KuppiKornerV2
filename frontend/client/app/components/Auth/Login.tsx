@@ -40,8 +40,8 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
   useEffect(() => {
     if (isSuccess) {
       // ??????
-      toast.success("Login Successfully");
       setOpen(false);
+      toast.success("Login Successfully");
     }
     if (error) {
       if ("data" in error) {
