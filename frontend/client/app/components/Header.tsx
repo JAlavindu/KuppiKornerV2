@@ -9,8 +9,9 @@ import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
-// import Image from "next/image";
-// import avatar from "../../public/assets/avatar.png";
+import Image from "next/image";
+import avatar from "../../public/assets/avatar.png";
+import { useSession } from "next-auth/react";
 
 type Props = {
   open: boolean;
@@ -23,7 +24,8 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  const user = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
+  const { data } = useSession();
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -72,7 +74,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   onClick={() => setOpenSidebar(true)}
                 />
               </div>
-              {/* {user ? (
+              {user ? (
                 <Link href={"/profile"}>
                   <Image
                     alt=""
@@ -80,13 +82,13 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                     src={user.avatar ? user.avatar : avatar}
                   />
                 </Link>
-              ) : ( */}
-              <HiOutlineUserCircle
-                size={25}
-                className="hidden 800px:block cursor-pointer dark:text-white text-black"
-                onClick={() => setOpen(true)}
-              />
-              {/* )} */}
+              ) : (
+                <HiOutlineUserCircle
+                  size={25}
+                  className="hidden 800px:block cursor-pointer dark:text-white text-black"
+                  onClick={() => setOpen(true)}
+                />
+              )}
             </div>
           </div>
         </div>
