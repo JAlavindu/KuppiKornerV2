@@ -219,9 +219,7 @@ export const updateAccessToken = catchAsyncError(
       }
       const session = await redis.get(decode.id as string);
       if (!session) {
-        return next(
-          new ErrorHandler("Please login for access this resources", 400)
-        );
+        return next(new ErrorHandler(message, 400));
       }
       const user = JSON.parse(session);
       const accessToken = jwt.sign(
