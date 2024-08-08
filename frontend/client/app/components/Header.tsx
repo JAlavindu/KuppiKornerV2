@@ -31,35 +31,35 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
   useEffect(() => {
-    if (!user && data) {
-      socialAuth({
-        email: data.user?.email,
-        name: data.user?.name,
-        avatar: data.user?.image,
-      });
+    if (!user) {
+      if (data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data?.user?.image,
+        });
+      }
     }
     if (isSuccess) {
       toast.success("Login Successfully");
     }
-  }, [data, user, isSuccess, socialAuth]);
+  }, [data, user]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setActive(window.scrollY > 85);
-    };
+  if (typeof window !== "undefined") {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 85) {
+        setActive(true);
+      } else {
+        setActive(false);
+      }
+    });
+  }
 
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleClose = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).id === "screen") {
-      setOpenSidebar(false);
+  const handleClose = (e: any) => {
+    if (e.target.id === "screen") {
+      {
+        setOpenSidebar(false);
+      }
     }
   };
 
@@ -73,11 +73,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
         }`}
       >
         <div className="w-[95%] 800px:w-[92%] m-auto py-2 h-full">
-          <div className="w-full h-[80px] flex items-center justify-between p-3">
+          <div className="w-full h-80px flex items-center justify-between p-3">
             <div>
               <Link
-                href="/"
-                className="text-[25px] font-K2D font-[500] text-black dark:text-white"
+                href={"/"}
+                className={`text-[25px] font-K2D font-[500] text-black dark:text-white`}
               >
                 KuppiKorner
               </Link>
@@ -93,14 +93,12 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                 />
               </div>
               {user ? (
-                <Link href="/profile">
-                  <a>
-                    <Image
-                      alt="User Avatar"
-                      className="w-[30px] h-[30px] rounded-full cursor-pointer"
-                      src={user.avatar ? user.avatar : avatar}
-                    />
-                  </a>
+                <Link href={"/profile"}>
+                  <Image
+                    alt=""
+                    className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                    src={user.avatar ? user.avatar : avatar}
+                  />
                 </Link>
               ) : (
                 <HiOutlineUserCircle
@@ -112,7 +110,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
             </div>
           </div>
         </div>
-        {/* MOBILE SIDEBAR */}
+        {/*MOBILE SIDEBAR*/}
         {openSidebar && (
           <div
             className="fixed w-full h-screen top-0 left-0 z-[99999] dark:bg-[unset] bg-[#0000024]"
@@ -136,9 +134,9 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
         )}
       </div>
 
-      {open && (
+      {route === "Login" && (
         <>
-          {route === "Login" && (
+          {open && (
             <CustomModel
               open={open}
               setOpen={setOpen}
@@ -147,7 +145,12 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               component={Login}
             />
           )}
-          {route === "Sign-Up" && (
+        </>
+      )}
+
+      {route === "Sign-Up" && (
+        <>
+          {open && (
             <CustomModel
               open={open}
               setOpen={setOpen}
@@ -156,7 +159,12 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               component={SignUp}
             />
           )}
-          {route === "Verification" && (
+        </>
+      )}
+
+      {route === "Verification" && (
+        <>
+          {open && (
             <CustomModel
               open={open}
               setOpen={setOpen}
