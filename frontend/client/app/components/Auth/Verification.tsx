@@ -32,7 +32,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
         toast.error(errorData.data.message);
         setInvalidError(true);
       } else {
-        console.log("an error occured");
+        console.log("an error occured", error);
       }
     }
   }, [isSuccess, error]);
