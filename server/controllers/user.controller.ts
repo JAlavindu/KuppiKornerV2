@@ -208,6 +208,12 @@ export const updateAccessToken = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const refresh_token = req.cookies.refresh_token;
+
+      if (!refresh_token) {
+        console.error("No refresh token provided");
+        return next(new ErrorHandler("No refresh token provided", 400));
+      }
+
       const decode = jwt.verify(
         refresh_token,
         process.env.REFRESH_TOKEN as string
@@ -215,10 +221,12 @@ export const updateAccessToken = catchAsyncError(
       const message = "could not refresh token";
 
       if (!decode) {
+        console.error("Failed to decode JWT");
         return next(new ErrorHandler(message, 400));
       }
       const session = await redis.get(decode.id as string);
       if (!session) {
+        console.error("No session found for user ID: ", decode.id);
         return next(new ErrorHandler(message, 400));
       }
       const user = JSON.parse(session);
