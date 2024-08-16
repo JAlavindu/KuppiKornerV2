@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/role-supports-aria-props */
 import { styles } from "@/app/styles/style";
 import React, { FC, useEffect, useState } from "react";
 import { useUpdatePasswordMutation } from "@/redux/features/user/userApi";
@@ -12,6 +13,7 @@ const ChangePassword: FC<Props> = (props) => {
   const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
 
   const changePasswordHandler = async (e: any) => {
+    e.preventDefault();
     if (newPassword !== confirmPassword) {
       toast.error("Password does not match");
     } else {

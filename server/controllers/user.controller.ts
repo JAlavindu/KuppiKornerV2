@@ -209,10 +209,10 @@ export const updateAccessToken = catchAsyncError(
     try {
       const refresh_token = req.cookies.refresh_token;
 
-      if (!refresh_token) {
-        console.error("No refresh token provided");
-        return next(new ErrorHandler("No refresh token provided", 400));
-      }
+      // if (!refresh_token) {
+      //   console.error("No refresh token provided");
+      //   return next(new ErrorHandler("No refresh token provided", 400));
+      // }
 
       const decode = jwt.verify(
         refresh_token,
