@@ -4,6 +4,8 @@ import avatarDefault from "../../../public/assets/avatar.png";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { SiCoursera } from "react-icons/si";
 import { AiOutlineLogout } from "react-icons/ai";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import Link from "next/link";
 
 type Props = {
   user: any;
@@ -48,7 +50,7 @@ const SideBarProfile: FC<Props> = ({
         }`}
         onClick={() => setActive(2)}
       >
-        <RiLockPasswordLine size={20} fill="#fff" />
+        <RiLockPasswordLine size={20} className="dark:text-white text-black" />
         <h5 className="pl-2 800px:block hidden font-poppins dark:text-white text-black">
           change password
         </h5>
@@ -60,11 +62,28 @@ const SideBarProfile: FC<Props> = ({
         }`}
         onClick={() => setActive(3)}
       >
-        <SiCoursera size={20} fill="#fff" />
+        <SiCoursera size={20} className="dark:text-white text-black" />
         <h5 className="pl-2 800px:block hidden font-poppins dark:text-white text-black">
           Enrolled courses
         </h5>
       </div>
+      {/* {user.role === "admin" && ( */}
+      <Link
+        className={`w-ull flex items-center px-3 py-4 cursor pinter ${
+          active === 6 ? "dark:bg-slate-800 bg-white" : "bg-transparent"
+        }`}
+        href={"/admin"}
+        // onClick={() => setActive(6)}
+      >
+        <MdOutlineAdminPanelSettings
+          size={20}
+          className="dark:text-white text-black"
+        />
+        <h5 className="pl-2 800px:block hidden font-poppins dark:text-white text-black">
+          Admin Dashboard
+        </h5>
+      </Link>
+      {/* )} */}
 
       <div
         className={`w-ull flex items-center px-3 py-4 cursor pinter ${
@@ -72,7 +91,7 @@ const SideBarProfile: FC<Props> = ({
         }`}
         onClick={() => logoutHandler()}
       >
-        <AiOutlineLogout size={20} fill="#fff" />
+        <AiOutlineLogout size={20} className="dark:text-white text-black" />
         <h5 className="pl-2 800px:block hidden font-poppins dark:text-white text-black">
           Log out
         </h5>

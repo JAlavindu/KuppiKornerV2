@@ -12,6 +12,7 @@ const ChangePassword: FC<Props> = (props) => {
   const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
 
   const changePasswordHandler = async (e: any) => {
+    e.prevemtDefault();
     if (newPassword !== confirmPassword) {
       toast.error("Password does not match");
     } else {
@@ -35,7 +36,7 @@ const ChangePassword: FC<Props> = (props) => {
   }, [isSuccess, error]);
   return (
     <div className="w-full pl-7 px-2 800px:px-5 800px:pl-8">
-      <h1 className="block text-[25px] 800px:text-[30px] font-poppins text-center font-[500] text-black dark:text-[#fff] pb-2">
+      <h1 className="block text-[25px] 800px:text-[30px] font-poppins text-center font-[500] text-black dark:text-[#fff] pb-2 ">
         change password
       </h1>
       <div className="w-full">
