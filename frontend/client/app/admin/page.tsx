@@ -3,6 +3,7 @@ import React from "react";
 import Heading from "../utils/Heading";
 import AdminSidebar from "../components/Admin/sidebar/AdminSidebar";
 import AdimnProtected from "../hooks/adminProtected";
+import DashBoardHero from "../components/Admin/DashBoardHero";
 
 type Props = {};
 
@@ -19,7 +20,9 @@ const page = (props: Props) => {
           <div className="1500px;w-[16%] w-1/5">
             <AdminSidebar />
           </div>
-          <div className="w-[85%]"></div>
+          <div className="w-[85%]">
+            <DashBoardHero />
+          </div>
         </div>
       </AdimnProtected>
     </div>

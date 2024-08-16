@@ -101,7 +101,7 @@ const Sidebar = () => {
           width: isCollapsed ? "0%" : "16%",
         }}
       >
-        <Menu>
+        <Menu iconShape="square">
           {/*LOGO AND MENU ICON*/}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
