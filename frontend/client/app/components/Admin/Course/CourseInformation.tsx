@@ -30,6 +30,31 @@ const CourseInformation: FC<Props> = ({
           setCourseInfo({ ...courseInfo, thumbnail: e.target.result });
         }
       };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDragOver = (e: any) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = (e: any) => {
+    e.preventDefault();
+    setDragging(false);
+  };
+
+  const handleDrop = (e: any) => {
+    e.preventDefault();
+    setDragging(false);
+    const file = e.dataTransfer.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        setCourseInfo({ ...courseInfo, thumbnail: e.target.result });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -65,6 +90,9 @@ const CourseInformation: FC<Props> = ({
             placeholder="write something amazing..."
             className={`${styles.input} !h-min !py-2`}
             value={courseInfo.description}
+            onChange={(e: any) =>
+              setCourseInfo({ ...courseInfo, description: e.target.value })
+            }
           />
         </div>
         <br />
@@ -157,7 +185,39 @@ const CourseInformation: FC<Props> = ({
             className="hidden"
             onChange={handleFileChange}
           />
+          <label
+            htmlFor="file"
+            className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
+              dragging ? "bg-blue-500" : "bg-transparent"
+            }`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            {courseInfo.thumbnail ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={courseInfo.thumbnail}
+                alt="thumbnail"
+                className="max-h-full w-full object-cover"
+              />
+            ) : (
+              <span className="text-black dark:text-white">
+                Drag and drop or click to upload thumbnail
+              </span>
+            )}
+          </label>
         </div>
+        <br />
+        <div className="w-full flex items-center justify-end">
+          <input
+            type="submit"
+            value="next"
+            className="w-full 800px:w-[180px] h-[40px] bg-[#37a39a] text-center text[#fff] rounded mt-8 cursor-pointer"
+          />
+        </div>
+        <br />
+        <br />
       </form>
     </div>
   );
