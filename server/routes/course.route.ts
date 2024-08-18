@@ -11,6 +11,7 @@ import {
   addReview,
   addReplyToReview,
   deleteCourse,
+  generateVideUrl,
 } from "../controllers/course.controller";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 
@@ -53,6 +54,8 @@ courseRouter.put(
   authorizeRoles("admin"),
   getAllCourses
 );
+
+courseRouter.post("/getVdoCipherOTP", generateVideUrl);
 
 courseRouter.delete(
   "/delete-course/:id",

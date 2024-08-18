@@ -13,6 +13,7 @@ import sendMail from "../utils/sendMail";
 import NotificationModdel from "../models/notification.model";
 import { getAllUsersService } from "../services/user.services";
 import { getAllCoursesService } from "../services/course.service";
+import axios from "axios";
 
 //upload course
 export const uploadCourse = catchAsyncError(
@@ -443,6 +444,29 @@ export const deleteCourse = catchAsyncError(
       });
 
       await course.deleteOne({ id });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+//generate video url
+export const generateVideUrl = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { videoId } = req.body;
+      const response = await axios.post(
+        `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
+        { ttl: 30 },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`,
+          },
+        }
+      );
+      res.json(response.data);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

@@ -48,6 +48,47 @@ const CourseContent: FC<Props> = ({
     setCourseContentData(updatedData);
   };
 
+  const addNewSection = () => {
+    if (
+      courseContentData[courseContentData.length - 1].title === "" ||
+      courseContentData[courseContentData.length - 1].videoUrl === "" ||
+      courseContentData[courseContentData.length - 1].description === "" ||
+      courseContentData[courseContentData.length - 1].links[0].url === "" ||
+      courseContentData[courseContentData.length - 1].links[0].title === ""
+    ) {
+      toast.error("Please fill all the fields");
+    } else {
+      setActiveSection(activeSection + 1);
+      const newContent = {
+        videoUrl: "",
+        title: "",
+        description: "",
+        videoSection: `untitled section ${activeSection}`,
+        links: [{ title: "", url: "" }],
+      };
+      setCourseContentData([...courseContentData, newContent]);
+    }
+  };
+
+  const prevButton = () => {
+    setActive(active - 1);
+  };
+
+  const handleOption = () => {
+    if (
+      courseContentData[courseContentData.length - 1].title === "" ||
+      courseContentData[courseContentData.length - 1].videoUrl === "" ||
+      courseContentData[courseContentData.length - 1].description === "" ||
+      courseContentData[courseContentData.length - 1].links[0].url === "" ||
+      courseContentData[courseContentData.length - 1].links[0].title === ""
+    ) {
+      toast.error("Please fill all the fields");
+    } else {
+      setActive(active + 1);
+      handleCourseSubmit();
+    }
+  };
+
   const newContentHandler = (item: any) => {
     if (
       item.title === "" ||
@@ -274,7 +315,30 @@ const CourseContent: FC<Props> = ({
           );
         })}
         <br />
+        <div
+          className="flex items-center text-[20px] dark:text-white text-black cursor-pointer"
+          onClick={() => addNewSection()}
+        >
+          <AiOutlinePlusCircle className="mr-2" /> Add New Section
+        </div>
       </form>
+      <br />
+      <div className="w-full flex items-center justify-between">
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-[#fff] rounded mt-8 hover:cursor-pointer"
+          onClick={() => prevButton()}
+        >
+          Prev
+        </div>
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-[#fff] rounded mt-8 hover:cursor-pointer"
+          onClick={() => handleOption()}
+        >
+          Next
+        </div>
+      </div>
+      <br />
+      <br />
     </div>
   );
 };
