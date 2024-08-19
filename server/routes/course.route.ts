@@ -11,12 +11,15 @@ import {
   addReview,
   addReplyToReview,
   deleteCourse,
-  generateVideUrl,
+  generateVideoUrl,
+  getAdminCourses,
 } from "../controllers/course.controller";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
+import { updateAccessToken } from "../controllers/user.controller";
 
 courseRouter.post(
   "/create-course",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   uploadCourse
@@ -32,6 +35,13 @@ courseRouter.put(
 courseRouter.get("/get-course/:id", getSingleCourse);
 
 courseRouter.get("/get-courses/", getAllCourses);
+
+courseRouter.get(
+  "/get-admin-AllCourses",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getAdminCourses
+);
 
 courseRouter.get("/get-course-content/:id", isAuthenticated, getCourseByUser);
 
@@ -55,7 +65,7 @@ courseRouter.put(
   getAllCourses
 );
 
-courseRouter.post("/getVdoCipherOTP", generateVideUrl);
+courseRouter.post("/getVdoCipherOTP", generateVideoUrl);
 
 courseRouter.delete(
   "/delete-course/:id",

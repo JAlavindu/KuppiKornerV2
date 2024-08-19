@@ -3,12 +3,16 @@ import CoursePlayer from "@/app/utils/CoursePlayer";
 import Ratings from "@/app/utils/Ratings";
 import { Rating } from "@mui/material";
 import React, { FC } from "react";
+import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import CreateCourse from "./CreateCourse";
+import { serialize } from "v8";
 
 type Props = {
   active: number;
   setActive: (active: number) => void;
   courseData: any;
   handleCourseCreate: any;
+  isEdit: boolean;
 };
 
 const CoursePreview: FC<Props> = ({
@@ -16,11 +20,20 @@ const CoursePreview: FC<Props> = ({
   handleCourseCreate,
   setActive,
   active,
+  isEdit,
 }) => {
   const discountPercentage =
     ((courseData?.estimatedPrice - courseData?.price) /
       courseData?.estimatedPrice) *
     100;
+
+  const prevButton = () => {
+    setActive(active - 1);
+  };
+
+  const createCourse = () => {
+    handleCourseCreate();
+  };
   return (
     <div className="w-[90%] 800px:w-[90%] m-auto py-5 mb-5">
       <div className="w-full relative">
@@ -80,9 +93,55 @@ const CoursePreview: FC<Props> = ({
           </div>
 
           <br />
-          <h1 className="text-[20px] font-poppins font-[600]">
-            What will defaurt
+          <h1 className="text-[25px] font-poppins font-[600]">
+            What will learn from this course?
           </h1>
+        </div>
+        {courseData?.benefits.map((item: any, index: number) => (
+          <div className="w-full flex 800px:items-center py-2" key={index}>
+            <div className="w-[15px] mr-1">
+              <IoCheckmarkDoneOutline size={20} />
+            </div>
+            <p className="pl-2">{item.title}</p>
+          </div>
+        ))}
+        <br />
+        <br />
+        <h1 className="text-[25px] font-poppins font-[600]">
+          What will learn from this course?
+        </h1>
+      </div>
+      {courseData?.benefits.map((item: any, index: number) => (
+        <div className="w-full flex 800px:items-center py-2" key={index}>
+          <div className="w-[15px] mr-1">
+            <IoCheckmarkDoneOutline size={20} />
+          </div>
+          <p className="pl-2">{item.title}</p>
+        </div>
+      ))}
+      <br />
+      <br />
+      <div className="w-full">
+        <h1 className="text-[25px] font-poppins font-[600]">course details</h1>
+        <p className="text-[18px] mt-[20px] whitespace-pre-line w-full overflow-hidden">
+          {" "}
+          {courseData?.description}
+        </p>
+      </div>
+      <br />
+      <br />
+      <div className="w-full flex items-center justify-between">
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-[#fff] rounded mt-8"
+          onClick={() => prevButton()}
+        >
+          Prev
+        </div>
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-[#fff] rounded mt-8"
+          onClick={() => createCourse()}
+        >
+          {isEdit ? "Update" : "Create"}
         </div>
       </div>
     </div>

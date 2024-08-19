@@ -122,12 +122,15 @@ const Sidebar = () => {
                     KuppiKorner
                   </h3>
                 </Link>
-                <IconButton
-                  onClick={() => setIsCollapsed(!isCollapsed)}
-                  className="inline-block"
-                >
-                  <ArrowBackIosIcon className="text-black dark:text-[#ffffffc1]" />
-                </IconButton>
+
+                <div>
+                  <IconButton
+                    onClick={() => setIsCollapsed(!isCollapsed)}
+                    className="inline-block "
+                  >
+                    <ArrowBackIosIcon className="text-black dark:text-[#ffffffc1] " />
+                  </IconButton>
+                </div>
               </Box>
             )}
           </MenuItem>

@@ -44,8 +44,11 @@ export const editCourse = catchAsyncError(
     try {
       const data = req.body;
       const thumbnail = data.thumbnail;
-      if (thumbnail) {
-        await cloudinary.v2.uploader.destroy(thumbnail.public_id);
+      const courseId = req.params.id;
+      const courseData = (await CourseModel.findById(courseId)) as any;
+
+      if (thumbnail && !thumbnail.startsWith("https")) {
+        await cloudinary.v2.uploader.destroy(courseData?.thumbnail.public_id);
 
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
           folder: "courses",
@@ -56,12 +59,17 @@ export const editCourse = catchAsyncError(
           url: myCloud.secure_url,
         };
       }
-      const courseId = req.params.id;
+
+      if (thumbnail.startsWith("https")) {
+        data.thumbnail = {
+          public_id: courseData?.thumbnail.public_id,
+          url: courseData?.thumbnail.url,
+        };
+      }
+
       const course = await CourseModel.findByIdAndUpdate(
         courseId,
-        {
-          $set: data,
-        },
+        { $set: data },
         { new: true }
       );
 
@@ -412,7 +420,7 @@ export const addReplyToReview = catchAsyncError(
 );
 
 //get all courses --- only for admin
-export const gerAllUsers = catchAsyncError(
+export const getAdminCourses = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       getAllCoursesService(res);
@@ -451,7 +459,7 @@ export const deleteCourse = catchAsyncError(
 );
 
 //generate video url
-export const generateVideUrl = catchAsyncError(
+export const generateVideoUrl = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { videoId } = req.body;
